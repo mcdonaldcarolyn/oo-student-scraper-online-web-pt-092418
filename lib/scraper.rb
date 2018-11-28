@@ -30,9 +30,23 @@ class Scraper
     site = Nokogiri::HTML(html)
     profile = site.css(".social-icon-container")
     new_array = []
-    profiles.each do |profile|
-      linked = profile.at("a")["href"]
-    end
+    profile.each. do |profile|
+      linked = profile.at("a")["href"][1]
+      binding.pry
+      git = profile.at("a")["href"][0]
+      face = profile.at("a")["href"][2]
+      blog = profile.at("a")["href"][3]
+      quote = profile.at(".profile-quote")
+      bio = profile.at(".discription-holder")
+      pro_col= {}
+        pro_col[:linkedin] = linked
+        pro_col[:github] = git
+        pro_col[:blog] = blog
+        pro_col[:profile_quote] = quote
+        pro_col[:bio] = bio
+        new_array.push(pro_col)
+      end
+    new_array
   end
 
 end
