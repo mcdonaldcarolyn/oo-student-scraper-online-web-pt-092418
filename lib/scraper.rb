@@ -30,7 +30,7 @@ class Scraper
     site = Nokogiri::HTML(html)
     profile = site.css(".social-icon-container")
     new_array = []
-    profile.each. do |profile|
+    profile.each do |profile|
       linked = profile.at("a")["href"][1]
       binding.pry
       git = profile.at("a")["href"][0]
