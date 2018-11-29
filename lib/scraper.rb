@@ -31,16 +31,17 @@ class Scraper
     profile = site.css(".social-icon-container")
     new_array = []
     profile.each do |profile|
-      linked = profile.at("a")["href"][1]
-      binding.pry
-      git = profile.at("a")["href"][0]
-      face = profile.at("a")["href"][2]
-      blog = profile.at("a")["href"][3]
-      quote = profile.at(".profile-quote")
-      bio = profile.at(".discription-holder")
+      atags = profile.css("a")
+      git = atags[0]["href"]
+      linkedin = atags[1]["href"]
+      blog = 
+      also = site.css(".vital-text-container")
+      quote = also.css(".profile-quote")
+      bio_get = site.css(".detail-container")
+      bio = bio_get.css(".description-holder p")
       pro_col= {}
-        pro_col[:linkedin] = linked
         pro_col[:github] = git
+        pro_col[:linkedin] = linkedin
         pro_col[:blog] = blog
         pro_col[:profile_quote] = quote
         pro_col[:bio] = bio
