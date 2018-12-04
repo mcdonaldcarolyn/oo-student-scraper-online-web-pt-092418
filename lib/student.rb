@@ -5,7 +5,8 @@ class Student
   @@all = []
 
   def initialize(student_hash)
-    
+    student_hash.keys.each |key|
+      [key] == student_hash[key]
   end
 
   def self.create_from_collection(students_array)
@@ -13,11 +14,11 @@ class Student
   end
 
   def add_student_attributes(attributes_hash)
-    
+    Scraper.new.attributes_hash
   end
 
   def self.all
-    
+    @@all
   end
 end
 

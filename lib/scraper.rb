@@ -28,26 +28,29 @@ class Scraper
   def self.scrape_profile_page(profile_url)
     html = open(profile_url)
     site = Nokogiri::HTML(html)
-    profile = site.css(".social-icon-container")
+    profile = site.css(".social-icon-container")[0]
     new_array = []
-    profile.each do |profile|
-      atags = profile.css("a")
-      git = atags[0]["href"]
-      linkedin = atags[1]["href"]
-      blog = 
       also = site.css(".vital-text-container")
-      quote = also.css(".profile-quote")
-      bio_get = site.css(".detail-container")
-      bio = bio_get.css(".description-holder p")
-      pro_col= {}
-        pro_col[:github] = git
-        pro_col[:linkedin] = linkedin
-        pro_col[:blog] = blog
-        pro_col[:profile_quote] = quote
-        pro_col[:bio] = bio
-        new_array.push(pro_col)
-      end
-    new_array
+      quote = site.css(".profile-quote").first.text
+      bio = site.css(".bio-content .description-holder p").first.text
+      pro_col = {
+        :profile_quote => quote,
+        :bio => bio
+      }
+      atags = profile.css("a")
+      atags.each do |atag|
+        href = atag['href']
+        if href.start_with?('https://twitter.com')
+          pro_col[:twitter] = href
+        elsif href.start_with?('https://www.linkedin.com')
+          pro_col[:linkedin] = href
+        elsif href.start_with?('https://github.com')
+          pro_col[:github] = href
+        else
+          pro_col[:blog] = href
+        end
+      end      
+    pro_col
   end
 
 end
